@@ -23,7 +23,6 @@ A simple command-line tool written in Python that calculates subnets based on a 
    cd subnet-calculator.py
    python subnet-calculator.py
 
-
 EXAMPLE OUTPUT:
  ```bash
 Subnetting 192.168.0.0 with a /26 results in:

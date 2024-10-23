@@ -10,8 +10,11 @@ def calculate_subnets(ip_address, prefix):
     # Calculate the size of each subnet
     subnet_size = 2 ** (32 - network.prefixlen)
 
+    # Calculate the number of subnets based on the prefix
+    num_subnets = 2 ** (network.prefixlen - 24) if network.prefixlen > 24 else 1
+
     # Calculate and store all subnets
-    for i in range(0, 2 ** (network.prefixlen - 24)):
+    for i in range(num_subnets):
         # Calculate the network address for each subnet
         current_network = ipaddress.IPv4Address(network.network_address + (i * subnet_size))
         first_ip = current_network + 1  # First usable IP
@@ -24,13 +27,13 @@ def calculate_subnets(ip_address, prefix):
 
 def display_subnets(ip_address, prefix, subnets):
     print(f"\nSubnetting {ip_address} with a /{prefix} results in:\n")
-    print(f"{'ID':<18} {'First / Last':<41} {'Broadcast':<18}")
+    print(f"{'ID':<16} {'First / Last':<36} {'Broadcast':<16}")
     print('-' * 80)
 
     for subnet in subnets:
         network_id, first_ip, last_ip, broadcast_ip = subnet
-        # Format the output for better readability with desired alignment
-        print(f"{str(network_id):<18} | {str(first_ip):<15} - {str(last_ip):<15} | {str(broadcast_ip):<15}")
+        # Adjust the spacing for more symmetrical output
+        print(f"{str(network_id):<16} | {str(first_ip):<15} - {str(last_ip):<15} | {str(broadcast_ip):<16}")
 
     # Display the subnet mask based on the provided prefix
     subnet_mask = ipaddress.IPv4Network(f"{ip_address}/{prefix}").netmask
@@ -61,9 +64,12 @@ def is_valid_prefix(prefix):
 def main():
     while True:
         try:
+            print(" ")
+            print("¤ Subnet Calculator ¤")
+            print(" ")
             # Get user input for IP address
             ip_address = input("Enter IPv4 address: ").strip()
-            # Get user input for subnet prefix (no leading zero error will occur here)
+            # Get user input for subnet prefix
             prefix = input("Enter prefix: ").strip()
 
             # Validate IP address
@@ -82,8 +88,11 @@ def main():
             # Calculate the subnets
             subnets = calculate_subnets(ip_address, prefix_value)
 
+            # Adjust the IP address to the correct network address
+            network_address = ipaddress.IPv4Network(f"{subnets[0][0]}/{prefix_value}", strict=False).network_address
+
             # Display the calculated subnets and subnet mask
-            display_subnets(ip_address, prefix_value, subnets)
+            display_subnets(str(network_address), prefix_value, subnets)
 
         except ValueError as e:
             print(f"Error: {e}. Please enter a valid IPv4 address and prefix.")

@@ -16,7 +16,7 @@ A simple command-line tool written in Python that calculates subnets based on a 
 
 1. Ensure you have Python 3.x installed on your system. You can download it from [python.org](https://www.python.org/downloads/).
 
-2. Clone the repository or download the script file:
+2. Download and run the script:
 
    ```bash
    git clone https://github.com/GlitchLinux/subnet-calculator.py.git

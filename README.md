@@ -21,7 +21,7 @@ A simple command-line tool written in Python that calculates subnets based on a 
    ```bash
    git clone https://github.com/GlitchLinux/subnet-calculator.py.git
    cd subnet-calculator.py
-   python subnet-calculator.py
+   python3 subnet-calculator.py
 
 EXAMPLE OUTPUT:
  ```bash

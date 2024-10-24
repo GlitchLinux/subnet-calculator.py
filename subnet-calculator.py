@@ -53,8 +53,6 @@ def is_valid_ip(ip):
 
 def is_valid_prefix(prefix):
     """Validate the prefix input to ensure it is between /8 and /32."""
-    if not prefix.startswith('/'):
-        return False
     try:
         value = int(prefix.strip('/'))
         return 8 <= value <= 32
